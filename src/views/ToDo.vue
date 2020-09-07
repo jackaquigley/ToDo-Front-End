@@ -1,13 +1,16 @@
 <template lang="html">
   <div class="toDoList">
     <todo-list v-for="(todo, index) in todos" :key="index" :todo="todo" />
+    <todo-form />
   </div>
 </template>
 
 <script>
 
+import ToDoForm from '@/components/ToDoForm.vue'
 import ToDoList from '@/components/ToDoList.vue'
 import ToDoService from '@/services/ToDoService.js'
+import {eventBus} from '@/main.js'
 
 export default {
   data() {
@@ -18,12 +21,23 @@ export default {
   mounted() {
     ToDoService.getToDos()
     .then(todos => this.todos = todos);
-    },
+
+    eventBus.$on('todo-added', (todo) => {
+      this.todos.push(todo)
+    })
+  },
   components: {
-    'todo-list': ToDoList
+    'todo-list': ToDoList,
+    'todo-form': ToDoForm
     }
   }
 </script>
 
 <style lang="css">
+
+.toDoList {
+  display: flex;
+}
+
+
 </style>
