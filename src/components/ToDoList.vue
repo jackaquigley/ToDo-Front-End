@@ -1,16 +1,40 @@
 <template lang="html">
   <div class="toDoItem">
+    <div>
     <p>{{todo.name}}</p>
     <hr>
-    <p>{{todo.completed}}</p>
+    </div>
+    <button v-if="todo.completed" class="completedToDo" v-on:click="undoCompleteToDo(todo)">Completed</button>
+    <button v-if="!todo.completed" class="notCompletedToDo" v-on:click="completeToDo(todo)">Not Completed</button>
   </div>
 </template>
 
 <script>
 
+import { eventBus } from '@/main.js'
+import ToDoService from '@/services/ToDoService.js'
+
 export default {
   name: 'todo-list',
-  props: ['todo']
+  props: ['todo'],
+  methods: {
+    completeToDo(todo){
+      const completedToDo = {
+        completed: true
+      }
+
+      ToDoService.updateToDo(todo._id, completedToDo)
+      .then(completedToDo => eventBus.$emit('todo-updated', completedToDo))
+    },
+    undoCompleteToDo(todo){
+      const uncompletedToDo = {
+        completed: false
+      }
+
+      ToDoService.updateToDo(todo._id, uncompletedToDo)
+      .then(uncompletedToDo => eventBus.$emit('todo-updated', uncompletedToDo))
+    }
+  }
   }
 </script>
 
@@ -22,11 +46,24 @@ export default {
   width: 166px;
   text-align: center;
   height: 166px;
-  border: 1px solid black;
 }
 
 p {
   font-size: 22px;
+}
+
+.completedToDo {
+  background-color: yellow;
+  height: 44px;
+}
+
+.notCompletedToDo {
+  background-color: pink;
+  height: 44px;
+}
+
+.todoButton {
+  text-align: center;
 }
 
 </style>

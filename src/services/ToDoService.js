@@ -12,5 +12,13 @@ export default {
       headers: {'Content-Type': 'application/json'}
     })
     .then(res => res.json())
+  },
+  updateToDo(id, payload){
+    return fetch(baseUrl + id, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json'}
+    })
+    .then(res => res.json())
   }
 }

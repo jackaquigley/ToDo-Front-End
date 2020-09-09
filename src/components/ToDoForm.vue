@@ -21,12 +21,11 @@ export default {
   data(){
     return {
       name: '',
-      completed: false,
-      event: ''
+      completed: false
     }
   },
   methods: {
-    addToDo(event){
+    addToDo(){
       const newToDo = {
         name: this.name,
         completed: this.completed
@@ -59,7 +58,5 @@ export default {
   margin: 6px;
   text-align: center;
 }
-
-
 
 </style>

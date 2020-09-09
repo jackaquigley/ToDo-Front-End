@@ -25,6 +25,11 @@ export default {
     eventBus.$on('todo-added', (todo) => {
       this.todos.push(todo)
     })
+
+    eventBus.$on('todo-updated', (todo) => {
+      const index = this.todos.findIndex(todoItem => todoItem._id === todo._id)
+      this.todos.splice(index, 1, todo)
+    })
   },
   components: {
     'todo-list': ToDoList,
