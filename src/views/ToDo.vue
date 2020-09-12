@@ -30,6 +30,11 @@ export default {
       const index = this.todos.findIndex(todoItem => todoItem._id === todo._id)
       this.todos.splice(index, 1, todo)
     })
+
+    eventBus.$on('todo-deleted', (id) => {
+      let index = this.todos.findIndex(todo => todo._id == id)
+      this.todos.splice(index, 1)
+    })
   },
   components: {
     'todo-list': ToDoList,

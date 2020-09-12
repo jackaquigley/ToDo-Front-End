@@ -20,5 +20,11 @@ export default {
       headers: { 'Content-Type': 'application/json'}
     })
     .then(res => res.json())
+  },
+  deleteToDo(id){
+    return fetch(baseUrl + id, {
+      method: 'DELETE'
+    })
+    .then(res => res.json());
   }
 }

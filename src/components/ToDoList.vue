@@ -6,6 +6,7 @@
     </div>
     <button v-if="todo.completed" class="completedToDo" v-on:click="undoCompleteToDo(todo)">Completed</button>
     <button v-if="!todo.completed" class="notCompletedToDo" v-on:click="completeToDo(todo)">Not Completed</button>
+    <button class="deleteToDo" v-on:click="deleteToDo(todo)">Delete Button</button>
   </div>
 </template>
 
@@ -33,6 +34,10 @@ export default {
 
       ToDoService.updateToDo(todo._id, uncompletedToDo)
       .then(uncompletedToDo => eventBus.$emit('todo-updated', uncompletedToDo))
+    },
+    deleteToDo(){
+      ToDoService.deleteToDo(this.todo._id)
+      .then(() => eventBus.$emit('todo-deleted', this.todo_id))
     }
   }
   }
@@ -55,11 +60,20 @@ p {
 .completedToDo {
   background-color: yellow;
   height: 44px;
+  width: 88px;
+}
+
+.deleteToDo {
+  background-color: red;
+  height: 44px;
+  width: 88px;
+  color: white;
 }
 
 .notCompletedToDo {
   background-color: pink;
   height: 44px;
+  width: 88px;
 }
 
 .todoButton {
